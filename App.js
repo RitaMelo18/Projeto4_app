@@ -38,6 +38,7 @@ import RestauranteScreen from './Pages/Food'
 //   }
 // }
 
+
 const TabNavigator = createBottomTabNavigator(
   {
     Início: HomeScreen,

@@ -1,15 +1,34 @@
-import React from 'react';
-import { Text, View } from 'react-native';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { createAppContainer } from 'react-navigation';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
+import * as React from 'react';
+import { Button, View, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-function HomeScreen() {
+import CozidoScreen from './HomePages/Cozido'
+
+function HomeScreen({ navigation }) {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Text>Página Inicial!</Text>
+            <Button
+                title="Go to Cozido eheh"
+                onPress={() => navigation.navigate("Cozido")}
+            />
         </View>
     );
 }
 
-export default HomeScreen;
+
+
+function App() {
+    const Stack = createStackNavigator();
+    return (
+        <NavigationContainer>
+            <Stack.Navigator initialRouteName="Home">
+                <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false, }} />
+                <Stack.Screen name="Cozido" component={CozidoScreen} />
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
+}
+
+export default App;
