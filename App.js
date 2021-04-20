@@ -4,35 +4,39 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 
-class HomeScreen extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Página Inicial!</Text>
-      </View>
-    );
-  }
-}
+import HomeScreen from './Pages/Home'
+import MapScreen from './Pages/Map'
+import RestauranteScreen from './Pages/Food'
 
-class MapScreen extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Mapa!</Text>
-      </View>
-    );
-  }
-}
+// class HomeScreen extends React.Component {
+//   render() {
+//     return (
+//       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+//         <Text>Página Inicial!</Text>
+//       </View>
+//     );
+//   }
+// }
 
-class RestauranteScreen extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Restaurantes!</Text>
-      </View>
-    );
-  }
-}
+// class MapScreen extends React.Component {
+//   render() {
+//     return (
+//       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+//         <Text>Mapa!</Text>
+//       </View>
+//     );
+//   }
+// }
+
+// class RestauranteScreen extends React.Component {
+//   render() {
+//     return (
+//       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+//         <Text>Restaurantes!</Text>
+//       </View>
+//     );
+//   }
+// }
 
 const TabNavigator = createBottomTabNavigator(
   {
