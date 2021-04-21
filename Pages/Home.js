@@ -17,11 +17,11 @@ function HomeScreen({ navigation }) {
                 <Text style={cardText}>Cozido à Portuguesa</Text>
             </TouchableOpacity>
             <TouchableOpacity style={card} onPress={() => navigation.navigate("Confraria")}>
-                <Image style={cardImage} source={require('../images/confraria2.jpg')} />
+                <Image style={cardImage} source={require('../images/confraria.jpg')} />
                 <Text style={cardText}>Confraria</Text>
             </TouchableOpacity>
             <TouchableOpacity style={card} onPress={() => navigation.navigate("Domingos Rodrigues")}>
-                <Image style={cardImage} source={require('../images/logo.jpeg')} />
+                <Image style={cardImage} source={require('../images/confraria2.jpg')} />
                 <Text style={cardText}>Domingos Rodrigues</Text>
             </TouchableOpacity>
             <TouchableOpacity style={card} onPress={() => navigation.navigate("Créditos")}>
