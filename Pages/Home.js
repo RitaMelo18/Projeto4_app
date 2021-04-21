@@ -4,16 +4,31 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import CozidoScreen from './HomePages/Cozido'
+import ConfrariaScreen from './HomePages/Confraria'
+import DomingosScreen from './HomePages/Domingos'
+import CreditosScreen from './HomePages/Creditos'
 
 function HomeScreen({ navigation }) {
-    let { container, cardText, card, cardImage } = styles
+    let { container, cardText, card, cardImage} = styles
     return (
         <View style={container}>
             <TouchableOpacity style={card} onPress={() => navigation.navigate("Cozido")}>
-                <Image style={cardImage} source={require('../images/logo.jpeg')}/>
-                <Text style={cardText}>Card Title</Text>
+                <Image style={cardImage} source={require('../images/cozido.jpeg')} />
+                <Text style={cardText}>Cozido à Portuguesa</Text>
             </TouchableOpacity>
-            <Text>Página Inicial!</Text>
+            <TouchableOpacity style={card} onPress={() => navigation.navigate("Confraria")}>
+                <Image style={cardImage} source={require('../images/confraria2.jpg')} />
+                <Text style={cardText}>Confraria</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={card} onPress={() => navigation.navigate("Domingos Rodrigues")}>
+                <Image style={cardImage} source={require('../images/logo.jpeg')} />
+                <Text style={cardText}>Domingos Rodrigues</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={card} onPress={() => navigation.navigate("Créditos")}>
+                <Image style={cardImage} source={require('../images/creditos2.png')} />
+                <Text style={cardText}>Créditos</Text>
+            </TouchableOpacity>
+
         </View>
     );
 }
@@ -27,6 +42,9 @@ function App() {
             <Stack.Navigator initialRouteName="Home">
                 <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false, }} />
                 <Stack.Screen name="Cozido" component={CozidoScreen} />
+                <Stack.Screen name="Confraria" component={ConfrariaScreen} />
+                <Stack.Screen name="Domingos Rodrigues" component={DomingosScreen} />
+                <Stack.Screen name="Créditos" component={CreditosScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     );
@@ -35,31 +53,37 @@ function App() {
 
 const styles = StyleSheet.create({
     container: {
+        marginTop: 20,
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
     },
     cardText: {
-        fontSize: 30
+        fontSize: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignContent: 'center',
+        textAlign: 'center'
+
     },
-    card :{
+    card: {
         backgroundColor: '#fff',
         marginBottom: 10,
         marginLeft: '2%',
-        width: '96%',
+        marginRight: '2%',
+        width: '95%',
         shadowColor: '#000',
         shadowOpacity: 1,
-        shadowOffset :{
-            width: 3,
-            height: 3
-        }
+        shadowOffset: {
+            width: 5,
+            height: 5
+        },
     },
-    cardImage :{
+    cardImage: {
         width: '100%',
-        height: 200,
+        height: 130,
         resizeMode: 'cover'
     }
-
 
 })
 
