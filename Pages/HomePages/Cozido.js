@@ -7,7 +7,7 @@ function CozidoScreen() {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        fetch('https://22059cm.000webhostapp.com/myslim/api/utilizador')
+        fetch('https://cm22059.000webhostapp.com/myslim2/api/get/descrCozido')
             .then((response) => response.json())
             .then((json) => setData(json))
             .catch((error) => console.error(error))
@@ -21,7 +21,7 @@ function CozidoScreen() {
                     data={data}
                     keyExtractor={({ id }, index) => id}
                     renderItem={({ item }) => (
-                        <Text>Id: {item.id}, Email: {item.email}</Text>
+                        <Text>{item.valor}</Text>
                     )}
                 />
             )}
