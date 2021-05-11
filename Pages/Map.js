@@ -9,14 +9,14 @@ import Geolocation from '@react-native-community/geolocation';
 function MapScreen() {
     const [error, setError] = useState();
     const [initialPosition, setInicialPosition] = useState({
-        latitude:41.6946,
+        latitude: 41.6946,
         longitude: -8.83016,
         latitudeDelta: 0.1,
-        longitudeDelta: 0.1
+        longitudeDelta: 0.1,
     });
     const [markerPosition, setMarkerPosition] = useState({
-        latitude:41.6946,
-        longitude: -8.83016
+        latitude: 41.6946,
+        longitude: -8.83016,
     });
     const handleSuccess = position => {
         var lat = parseFloat(position.coords.latitude)
@@ -26,10 +26,10 @@ function MapScreen() {
             latitude: lat,
             longitude: long,
             latitudeDelta: 0.1,
-            longitudeDelta: 0.1
+            longitudeDelta: 0.1,
         }
         setInicialPosition(initialRegion)
-        setMarkerPosition(initialPosition)
+        setMarkerPosition(initialRegion)
     };
 
     const handleError = error => {

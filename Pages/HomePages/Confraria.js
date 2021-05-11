@@ -6,7 +6,7 @@ function ConfrariaScreen() {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        fetch('https://cm22059.000webhostapp.com/myslim2/api/get/descrConfraria')
+        fetch('http://apibackoffice.confrariadocozido.pt/api/get/descrConfraria')
             .then((response) => response.json())
             .then((json) => setData(json))
             .catch((error) => console.error(error))
