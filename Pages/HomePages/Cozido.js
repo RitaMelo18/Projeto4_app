@@ -15,13 +15,15 @@ function CozidoScreen() {
     });
     return (
         <View style={{ flex: 1, padding: 24 }}>
-            <Image style={{width:350, height:250, resizeMode:'contain'}} source={require('../../images/cozido.jpeg')} />
             {isLoading ? <ActivityIndicator /> : (
                 <FlatList
                     data={data}
                     keyExtractor={({ id }, index) => id}
                     renderItem={({ item }) => (
+                        <View >
+                        <Image style={{width:350, height:250, resizeMode:'contain'}} source={require('../../images/cozido.jpeg')} />
                         <Text>{item.valor}</Text>
+                        </View>
                     )}
                 />
             )}

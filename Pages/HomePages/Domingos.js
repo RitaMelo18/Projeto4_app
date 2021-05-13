@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, Text, View } from 'react-native';
+import { StyleSheet, ActivityIndicator, FlatList, Text, View, Image } from 'react-native';
 
 function DomingosScreen() {
     const [isLoading, setLoading] = useState(true);
@@ -20,7 +20,10 @@ function DomingosScreen() {
                     data={data}
                     keyExtractor={({ id }, index) => id}
                     renderItem={({ item }) => (
+                        <View >
+                       <Image style={{width:350, height:250, resizeMode:'contain'}} source={require('../../images/confraria2.jpg')} />
                         <Text>{item.valor}</Text>
+                        </View>
                     )}
                 />
             )}

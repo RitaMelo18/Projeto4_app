@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, Text, View } from 'react-native';
+import { StyleSheet, ActivityIndicator, FlatList, Text, View, Image } from 'react-native';
 
 function ConfrariaScreen() {
     const [isLoading, setLoading] = useState(true);
@@ -15,12 +15,16 @@ function ConfrariaScreen() {
 
     return (
         <View style={{ flex: 1, padding: 24 }}>
+             
             {isLoading ? <ActivityIndicator /> : (
                 <FlatList
                     data={data}
                     keyExtractor={({ id }, index) => id}
                     renderItem={({ item }) => (
+                        <View >
+                        <Image style={{width:350, height:250, resizeMode:'contain'}} source={require('../../images/confraria.jpg')} />
                         <Text>{item.valor}</Text>
+                        </View>
                     )}
                 />
             )}
