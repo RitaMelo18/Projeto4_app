@@ -72,7 +72,7 @@ function MapScreen() {
                     pinColor='blue'
                 ></Marker>
 
-                {data.map(marker => (
+                {data.filter(marker => marker.estado == 1).map(marker => (
                     <Marker
                         key={marker.id}
                         coordinate={{ latitude: Number(marker.latitude), longitude: Number(marker.longitude) }}
