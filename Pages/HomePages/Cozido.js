@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, Text, View } from 'react-native';
+import { StyleSheet, ActivityIndicator, FlatList, Text, View, Image } from 'react-native';
 
 
 function CozidoScreen() {
@@ -13,9 +13,9 @@ function CozidoScreen() {
             .catch((error) => console.error(error))
             .finally(() => setLoading(false));
     });
-
     return (
         <View style={{ flex: 1, padding: 24 }}>
+            <Image style={{width:350, height:250, resizeMode:'contain'}} source={require('../../images/cozido.jpeg')} />
             {isLoading ? <ActivityIndicator /> : (
                 <FlatList
                     data={data}
@@ -31,14 +31,4 @@ function CozidoScreen() {
 
 
 
-
-    // function CozidoScreen() {
-    //     return (
-    //         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    //             <Text>Cozido</Text>
-    //         </View>
-
-    //     );
-    // }
-
-    export default CozidoScreen;
+export default CozidoScreen;
