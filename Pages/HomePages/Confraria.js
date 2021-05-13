@@ -4,6 +4,7 @@ import { StyleSheet, ActivityIndicator, FlatList, Text, View, Image } from 'reac
 function ConfrariaScreen() {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
+    const [didMount, setDidMount] = useState(false); 
 
     useEffect(() => {
         fetch('http://apibackoffice.confrariadocozido.pt/api/get/descrConfraria')
@@ -12,6 +13,15 @@ function ConfrariaScreen() {
             .catch((error) => console.error(error))
             .finally(() => setLoading(false));
     });
+
+    useEffect(() => {
+        setDidMount(true);
+        return () => setDidMount(false);
+     }, [])
+     
+     if(!didMount) {
+       return null;
+     }
 
     return (
         <View style={{ flex: 1, padding: 24 }}>
@@ -23,7 +33,7 @@ function ConfrariaScreen() {
                     renderItem={({ item }) => (
                         <View >
                         <Image style={{width:350, height:250, resizeMode:'contain'}} source={require('../../images/confraria.jpg')} />
-                        <Text>{item.valor}</Text>
+                        <Text style={{textAlign: 'justify'}}>{item.valor}</Text>
                         </View>
                     )}
                 />

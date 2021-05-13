@@ -69,14 +69,14 @@ function MapScreen() {
             >
                 <Marker
                     coordinate={markerPosition}
-                    pinColor='blue'
+                    icon={require('../images/user.png')}
                 ></Marker>
 
                 {data.filter(marker => marker.estado == 1).map(marker => (
                     <Marker
                         key={marker.id}
                         coordinate={{ latitude: Number(marker.latitude), longitude: Number(marker.longitude) }}
-                        pinColor='#44753d'
+                        icon={require('../images/conf.png')}
                     >
                         <Callout onPress={Callout}>
                             <Text  style={styles.title}>{marker.nome}</Text>
@@ -86,7 +86,6 @@ function MapScreen() {
                             <Text>Horário: {marker.horaInicio}h - {marker.horaFim}h</Text>
                             <Text>Preço: {marker.precoMinimo}€ - {marker.precoMaximo}€</Text>
                         </Callout>
-                        {console.log(marker.latitude)}
                     </Marker>
                 ))}
             </MapView>
