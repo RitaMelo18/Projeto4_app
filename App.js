@@ -64,9 +64,10 @@ const TabNavigator = createBottomTabNavigator(
       },
     }),
     tabBarOptions: {
+      style:{height:55, justifyContent: 'center', alignContent:'center'},
       activeTintColor: "#376034",
-      inactiveTintColor: 'gray',
-
+      inactiveTintColor: 'gray'     
+      
     },
   }
 );
