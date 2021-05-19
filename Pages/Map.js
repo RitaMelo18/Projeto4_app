@@ -1,11 +1,11 @@
 import React, { useEffect, useState, Component } from 'react';
-import { Text, View, StyleSheet, PermissionsAndroid, Alert, Modal, Button, TouchableOpacity, Animated, Dimensions, Pressable } from 'react-native';
+import { Text, View, StyleSheet, PermissionsAndroid, Alert, Modal, Button, TouchableOpacity, Animated, Dimensions, Pressable, TouchableNativeFeedback } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps'
 import Geolocation from '@react-native-community/geolocation';
-
+import { Rating, AirbnbRating } from 'react-native-ratings'
 
 
 function MapScreen() {
@@ -105,8 +105,8 @@ function MapScreen() {
 
 
             <Modal  // modal para escolher trajeto ou multi objetivo
-                style={{ width: 200, height: 120 ,backgroundColor:"transparent"}}
-                animationType="slide"
+                style={{ backgroundColor: "transparent" }}
+                animationType="fade"
                 transparent={true}
                 visible={modalVisible}
                 onRequestClose={() => {
@@ -116,20 +116,48 @@ function MapScreen() {
             >
                 <View style={[styles.container2, styles.center]}>
 
-                {data.filter(marker => marker.id == dados).map(marker => (
-                        <View style={[styles.wrap]}>
+                    {data.filter(marker => marker.id == dados).map(marker => (
+                        <View style={[styles.wrap]} key={marker.id}>
                             <Text style={styles.title}>{marker.nome}</Text>
-                            <Text>Morada: {marker.morada}</Text>
-                            <Text>Contacto: {marker.contacto}</Text>
-                            <Text>Dia do Cozido: {marker.diaCozido}</Text>
-                            <Text>Horário: {marker.horaInicio}h - {marker.horaFim}h</Text>
-                            <Text>Preço: {marker.precoMinimo}€ - {marker.precoMaximo}€</Text>
+                            <Text> </Text>
+                            <AirbnbRating
+                                defaultRating={marker.avaliacaoTotal}
+                                count={5}
+                                size={25}
+                                showRating={false}
+                            />
+                           
+                            <Text> </Text>
+                            <Text style={styles.text}>Morada: {marker.morada}</Text>
+                            <Text> </Text>
+                            <Text style={styles.text}>Contacto: {marker.contacto}</Text>
+                            <Text> </Text>
+                            <Text style={styles.text}>Dia do Cozido: {marker.diaCozido}</Text>
+                            <Text> </Text>
+                            <Text style={styles.text}>Horário: {marker.horaInicio}h - {marker.horaFim}h</Text>
+                            <Text> </Text>
+                            <Text style={styles.text}>Preço: {marker.precoMinimo}€ - {marker.precoMaximo}€</Text>
+                            <Text> </Text>
+                            <Text style={{fontSize: 16, fontWeight:'bold', alignSelf:'center'}}>A sua avaliação</Text>
+                            <AirbnbRating
+                                defaultRating={0}
+                                count={5}
+                                size={22}
+                                reviewSize={24}
+                                reviews={[
+                                    '1',
+                                    '2',
+                                    '3',
+                                    '4',
+                                    '5'
+                                ]}
+                            />
                             <View style={{ flexDirection: "row" }}>
-                                <TouchableOpacity style={[styles.modalButton, styles.center]} onPress={() => setModalVisible(!modalVisible)}>
-                                    <Text>Close</Text>
+                                <TouchableOpacity style={[styles.modalButton, styles.center]} >
+                                    <Text>Avaliar</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={[styles.modalButton, styles.center]}>
-                                    <Text>Save</Text>
+                                <TouchableOpacity style={[styles.modalButton, styles.center]}onPress={() => setModalVisible(!modalVisible)}>
+                                    <Text style={{color: '#1a73e8',}}>Fechar</Text>
                                 </TouchableOpacity>
                             </View>
 
@@ -156,10 +184,12 @@ function MapScreen() {
                         icon={require('../images/conf.png')}
 
                     >
-                        <Callout onPress={() => { setModalVisible(true); setDados(marker.id) }}>
-                            <Text style={styles.title}>{marker.nome}</Text>
-                            <Text style={styles.info}>Ver mais informações</Text>
+                        <Callout tooltip onPress={() => { setModalVisible(true); setDados(marker.id) }}>
+                            <View style={[styles.wrap2]}>
+                                <Text style={styles.title2}>{marker.nome}</Text>
 
+                                <Text style={styles.info}>Ver mais informações</Text>
+                            </View>
                         </Callout>
 
 
@@ -186,11 +216,19 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontWeight: 'bold',
     },
+    title2: {
+        fontSize: 16,
+        textAlign: 'center',
+        fontWeight: 'bold',
+    },
     info: {
-        fontSize:14,
+        fontSize: 14,
         textAlign: 'center',
         color: '#1a73e8',
         fontWeight: 'bold'
+    },
+    text: {
+        fontSize: 16,
     },
     bubble: {
         flexDirection: 'row',
@@ -204,8 +242,24 @@ const styles = StyleSheet.create({
     },
     wrap: {
         alignContent: 'center',
-        padding: 20,
+        padding: 30,
         margin: 20,
+        borderRadius: 8,
+        backgroundColor: "#ffffff",
+        shadowColor: "#4048BF",
+        shadowOffset: {
+            width: 8.4,
+            height: 8.4
+        },
+        shadowOpacity: 0.74,
+        shadowRadius: 30,
+        elevation: 10
+    },
+    wrap2: {
+        justifyContent: 'center',
+        height: 60,
+        width: 180,
+        alignContent: 'center',
         borderRadius: 8,
         backgroundColor: "#ffffff",
         shadowColor: "#4048BF",
