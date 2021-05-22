@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Component } from 'react';
-import { Text, View, StyleSheet, PermissionsAndroid, Alert, Modal, Button, TouchableOpacity, Animated, Dimensions, Pressable, TouchableNativeFeedback } from 'react-native';
+import { Text, View, StyleSheet, PermissionsAndroid, Alert, Modal, Button, TouchableOpacity, Animated, Dimensions, Pressable, TouchableNativeFeedback, ToastAndroid } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
@@ -14,6 +14,12 @@ function MapScreen() {
     const [modalVisible, setModalVisible] = useState(false);
     const [dados, setDados] = useState(0);
     const [ratingCount, setRatingCount] = useState(0);
+    const [numeroVotos, setNVotos] = useState(0);
+    const [somatorioAvaliacao, setSomatorioAval] = useState(0);
+
+    const PutsomatorioAval = somatorioAvaliacao + ratingCount;
+    const PutNumeroVotos = numeroVotos + 1;
+    const PutMediaAva = PutsomatorioAval / PutNumeroVotos;
 
     // const rating = 0;
 
@@ -65,40 +71,63 @@ function MapScreen() {
     }, []);
 
 
+    useEffect(() => {
+        {
+            data.filter(marker => marker.id == dados).map(marker => (
+                setNVotos(marker.nVotos),
+                setSomatorioAval(marker.somatorioAval)
+            ))
+        }
 
-    // function aqui() {
-    //     return(
-    //         <Modal transparent={true}>
-    //         <Animated.View style={[open]}>
-    //             <View style={[styles.container2, styles.center]}>
-    //                 {data.filter(marker => marker.estado == 1).map(marker => (
-    //                     <View style={[styles.wrap]}>
-    //                         <Text style={styles.title}>{marker.nome}</Text>
-    //                         <Text>Morada: {marker.morada}</Text>
-    //                         <Text>Contacto: {marker.contacto}</Text>
-    //                         <Text>Dia do Cozido: {marker.diaCozido}</Text>
-    //                         <Text>Horário: {marker.horaInicio}h - {marker.horaFim}h</Text>
-    //                         <Text>Preço: {marker.precoMinimo}€ - {marker.precoMaximo}€</Text>
-    //                         <View style={{ flexDirection: "row" }}>
-    //                             <TouchableOpacity style={[styles.modalButton, styles.center]} onPress={close}>
-    //                                 <Text>Close</Text>
-    //                             </TouchableOpacity>
-    //                             <TouchableOpacity style={[styles.modalButton, styles.center]} onPress={save}>
-    //                                 <Text>Save</Text>
-    //                             </TouchableOpacity>
-    //                         </View>
+    })
 
-    //                     </View>
-    //                 ))}
-    //             </View>
-    //         </Animated.View>
-    //     </Modal>
-    //     )
 
-    // }
+    // console.log(ratingCount)
+    // console.log(avaliaçaoTotal)
+    // console.log(nVotos)
+    // console.log(somatorioAvaliacao)
 
-    console.log(ratingCount)
-    
+    function postAvaliacao() {
+
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                id: dados,
+                avaliacaoTotal: PutMediaAva,
+                somatorioAval: PutsomatorioAval,
+                nVotos: PutNumeroVotos
+            })
+        }
+        fetch('http://apibackoffice.confrariadocozido.pt/api/updateAvaliacao', requestOptions)
+            .then(
+                setModalVisible(!modalVisible),
+                ToastAndroid.showWithGravity(
+                    "Erro",
+                    ToastAndroid.SHORT,
+                    ToastAndroid.CENTER
+                ))
+
+
+            .catch(
+                console.log("Erro ao fazer o post da avaliação"),
+                ToastAndroid.showWithGravity(
+                    "Avaliação registada!",
+                    ToastAndroid.SHORT,
+                    ToastAndroid.CENTER
+                )
+            )
+
+
+
+
+
+    }
+
+
+
+
+
     return (
         <View style={styles.container}>
 
@@ -119,8 +148,8 @@ function MapScreen() {
                     {data.filter(marker => marker.id == dados).map(marker => (
                         <View style={[styles.wrap]} key={marker.id}>
                             <Text style={styles.title}>{marker.nome}</Text>
-                            <Text> </Text>
-                            <Rating readonly={true} 
+                            <Text></Text>
+                            <Rating readonly={true}
                                 type='custom'
                                 fractions="{1}"
                                 startingValue={marker.avaliacaoTotal}
@@ -128,8 +157,8 @@ function MapScreen() {
                                 imageSize={30}
                                 showRating={false}
                                 style={{ paddingHorizontal: 10 }}
-                               
-                            />                           
+
+                            />
                             <Text> </Text>
                             <Text style={styles.text}>Morada: {marker.morada}</Text>
                             <Text> </Text>
@@ -141,7 +170,7 @@ function MapScreen() {
                             <Text> </Text>
                             <Text style={styles.text}>Preço: {marker.precoMinimo}€ - {marker.precoMaximo}€</Text>
                             <Text> </Text>
-                            <Text style={{fontSize: 16, fontWeight:'bold', alignSelf:'center'}}>A sua avaliação</Text>
+                            <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center' }}>A sua avaliação</Text>
                             <AirbnbRating
                                 defaultRating={0}
                                 count={5}
@@ -155,20 +184,20 @@ function MapScreen() {
                                     5
                                 ]}
                                 onFinishRating={rating => setRatingCount(rating)}
-                                // // selectedColor="#44753d"
-                                // // reviewColor="#44753d"
-                                // starImage={require('../images/colher.png')}
-                               
-                                // onPress={() => setDefaultRating(onFinishRating)}
-                                
+                            // // selectedColor="#44753d"
+                            // // reviewColor="#44753d"
+                            // starImage={require('../images/colher.png')}
+
+                            // onPress={() => setDefaultRating(onFinishRating)}
+
                             />
-                            
+
                             <View style={{ flexDirection: "row" }}>
-                                <TouchableOpacity style={[styles.modalButton, styles.center]} >
+                                <TouchableOpacity style={[styles.modalButton, styles.center]} onPress={() => { postAvaliacao(); setModalVisible(!modalVisible) }} >
                                     <Text>Avaliar</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={[styles.modalButton, styles.center]}onPress={() => setModalVisible(!modalVisible)}>
-                                    <Text style={{color: '#1a73e8',}}>Fechar</Text>
+                                <TouchableOpacity style={[styles.modalButton, styles.center]} onPress={() => setModalVisible(!modalVisible)}>
+                                    <Text style={{ color: '#1a73e8', }}>Fechar</Text>
                                 </TouchableOpacity>
                             </View>
 
