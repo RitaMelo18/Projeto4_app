@@ -88,8 +88,10 @@ function MapScreen() {
     // console.log(somatorioAvaliacao)
 
     function postAvaliacao() {
-
-        const requestOptions = {
+        if(ratingCount == 0){
+            ToastAndroid.showWithGravity("Insira uma avaliação entre 1 e 5.", ToastAndroid.SHORT, ToastAndroid.CENTER);
+        } else {
+            const requestOptions = {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -118,6 +120,8 @@ function MapScreen() {
                 )
             )
 
+        }
+        
 
 
 
@@ -194,7 +198,7 @@ function MapScreen() {
 
                             <View style={{ flexDirection: "row" }}>
                                 <TouchableOpacity style={[styles.modalButton, styles.center]} onPress={() => { postAvaliacao(); setModalVisible(!modalVisible) }} >
-                                    <Text>Avaliar</Text>
+                                    <Text  style={{ color: '#1a73e8', }}>Avaliar</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={[styles.modalButton, styles.center]} onPress={() => setModalVisible(!modalVisible)}>
                                     <Text style={{ color: '#1a73e8', }}>Fechar</Text>
