@@ -7,15 +7,15 @@ import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps'
 import Geolocation from '@react-native-community/geolocation';
 import { Rating, AirbnbRating } from 'react-native-ratings'
 
-
 function MapScreen() {
     const [error, setError] = useState();
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [dados, setDados] = useState(0);
+    const [ratingCount, setRatingCount] = useState(0);
 
-
+    // const rating = 0;
 
     const [initialPosition, setInicialPosition] = useState({
         latitude: 41.6946,
@@ -97,8 +97,8 @@ function MapScreen() {
 
     // }
 
-    console.log(dados)
-
+    console.log(ratingCount)
+    
     return (
         <View style={styles.container}>
 
@@ -120,13 +120,16 @@ function MapScreen() {
                         <View style={[styles.wrap]} key={marker.id}>
                             <Text style={styles.title}>{marker.nome}</Text>
                             <Text> </Text>
-                            <AirbnbRating
-                                defaultRating={marker.avaliacaoTotal}
+                            <Rating readonly={true} 
+                                type='custom'
+                                fractions="{1}"
+                                startingValue={marker.avaliacaoTotal}
                                 count={5}
-                                size={25}
+                                imageSize={30}
                                 showRating={false}
-                            />
-                           
+                                style={{ paddingHorizontal: 10 }}
+                               
+                            />                           
                             <Text> </Text>
                             <Text style={styles.text}>Morada: {marker.morada}</Text>
                             <Text> </Text>
@@ -142,16 +145,24 @@ function MapScreen() {
                             <AirbnbRating
                                 defaultRating={0}
                                 count={5}
-                                size={22}
+                                size={25}
                                 reviewSize={24}
                                 reviews={[
-                                    '1',
-                                    '2',
-                                    '3',
-                                    '4',
-                                    '5'
+                                    1,
+                                    2,
+                                    3,
+                                    4,
+                                    5
                                 ]}
+                                onFinishRating={rating => setRatingCount(rating)}
+                                // // selectedColor="#44753d"
+                                // // reviewColor="#44753d"
+                                // starImage={require('../images/colher.png')}
+                               
+                                // onPress={() => setDefaultRating(onFinishRating)}
+                                
                             />
+                            
                             <View style={{ flexDirection: "row" }}>
                                 <TouchableOpacity style={[styles.modalButton, styles.center]} >
                                     <Text>Avaliar</Text>

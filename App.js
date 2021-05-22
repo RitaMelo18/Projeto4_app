@@ -43,7 +43,7 @@ const TabNavigator = createBottomTabNavigator(
   {
     Início: HomeScreen,
     Mapa: MapScreen,
-    Restaurantes: RestauranteScreen
+    Recomendações: RestauranteScreen
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
@@ -55,7 +55,7 @@ const TabNavigator = createBottomTabNavigator(
           iconName = 'home'
         } else if (routeName === 'Mapa') {
           iconName = 'map-marker-alt'
-        } else if (routeName === 'Restaurantes') {
+        } else if (routeName === 'Recomendações') {
           iconName = 'utensils'
         }
 
