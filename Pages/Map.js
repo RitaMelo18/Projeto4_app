@@ -86,7 +86,7 @@ function MapScreen() {
     // console.log(avaliaçaoTotal)
     // console.log(nVotos)
     // console.log(somatorioAvaliacao)
-
+    
     function postAvaliacao() {
         if(ratingCount == 0){
             ToastAndroid.showWithGravity("Insira uma avaliação entre 1 e 5.", ToastAndroid.SHORT, ToastAndroid.CENTER);
