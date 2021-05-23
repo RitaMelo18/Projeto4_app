@@ -7,6 +7,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import HomeScreen from './Pages/Home'
 import MapScreen from './Pages/Map'
 import RestauranteScreen from './Pages/Food'
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen'; //Ecrã responsivo
 
 // class HomeScreen extends React.Component {
 //   render() {
@@ -64,7 +65,7 @@ const TabNavigator = createBottomTabNavigator(
       },
     }),
     tabBarOptions: {
-      style:{height:55, justifyContent: 'center', alignContent:'center'},
+      style:{height: hp('8%'), justifyContent: 'center', alignContent:'center'},
       activeTintColor: "#376034",
       inactiveTintColor: 'gray'     
       

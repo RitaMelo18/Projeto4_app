@@ -6,6 +6,8 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps'
 import Geolocation from '@react-native-community/geolocation';
 import { Rating, AirbnbRating } from 'react-native-ratings'
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen'; //Ecrã responsivo
+
 
 function MapScreen() {
     const [error, setError] = useState();
@@ -215,17 +217,22 @@ function MapScreen() {
                 provider={PROVIDER_GOOGLE}
                 style={styles.map}
                 region={initialPosition}
+                showsUserLocation={true}
             >
                 <Marker
                     coordinate={markerPosition}
-                    icon={require('../images/user.png')}
+                    // icon={require('../images/user2.png')}
+                    // pinColor={'#03A9F4'}
+                    opacity={0}
+                   
                 ></Marker>
 
                 {data.filter(marker => marker.estado == 1).map(marker => (
                     <Marker
                         key={marker.id}
                         coordinate={{ latitude: Number(marker.latitude), longitude: Number(marker.longitude) }}
-                        icon={require('../images/conf.png')}
+                        // icon={require('../images/conf3.png')}
+                        pinColor={'#00FF00'}
 
                     >
                         <Callout tooltip onPress={() => { setModalVisible(true); setDados(marker.id) }}>
@@ -250,7 +257,7 @@ function MapScreen() {
 const styles = StyleSheet.create({
     container: {
         ...StyleSheet.absoluteFillObject,
-        height: '100%',
+        height: hp('100%'),
     },
     map: {
         ...StyleSheet.absoluteFillObject,
@@ -341,4 +348,3 @@ const styles = StyleSheet.create({
 
 
 export default MapScreen;
-
