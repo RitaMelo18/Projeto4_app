@@ -8,6 +8,8 @@ import ConfrariaScreen from './HomePages/Confraria'
 import DomingosScreen from './HomePages/Domingos'
 import CreditosScreen from './HomePages/Creditos'
 
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen'; //Ecrã responsivo
+
 function HomeScreen({ navigation }) {
     let { container, cardText, card, cardImage} = styles
     return (
@@ -56,7 +58,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     cardText: {
         fontSize: 20,
@@ -71,7 +73,8 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         marginLeft: '2%',
         marginRight: '2%',
-        width: '95%',
+        width: wp('95%'),
+        height: hp('20%'),
         shadowColor: '#000',
         shadowOpacity: 1,
         shadowOffset: {
@@ -80,8 +83,8 @@ const styles = StyleSheet.create({
         },
     },
     cardImage: {
-        width: '100%',
-        height: 130,
+        width: wp('95%'),
+        height: hp('15%'),
         resizeMode: 'cover'
     }
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, ActivityIndicator, FlatList, Text, View, Image } from 'react-native';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen'; //Ecrã responsivo
 
 function ConfrariaScreen() {
     const [isLoading, setLoading] = useState(true);
@@ -32,8 +33,9 @@ function ConfrariaScreen() {
                     keyExtractor={({ id }, index) => id}
                     renderItem={({ item }) => (
                         <View >
-                        <Image style={{width:350, height:250, resizeMode:'contain'}} source={require('../../images/confraria.jpg')} />
-                        <Text style={{textAlign: 'justify'}}>{item.valor}</Text>
+                        <Image style={{width:wp('90%'), height:hp('35%'), resizeMode:'contain', justifyContent: 'center', alignItems: 'center'}} source={require('../../images/confraria.jpg')} />
+                        <Text></Text>
+                        <Text style={{textAlign: 'justify', lineHeight: 20}}>{item.valor}</Text>
                         </View>
                     )}
                 />

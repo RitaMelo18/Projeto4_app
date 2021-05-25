@@ -257,7 +257,7 @@ function MapScreen() {
 const styles = StyleSheet.create({
     container: {
         ...StyleSheet.absoluteFillObject,
-        height: hp('100%'),
+        height: hp('100%')
     },
     map: {
         ...StyleSheet.absoluteFillObject,
@@ -328,7 +328,11 @@ const styles = StyleSheet.create({
     },
     container2: {
         flex: 1,
-        backgroundColor: "transparent"
+        backgroundColor: "transparent",
+        justifyContent: 'center',
+        alignItems: 'center',
+        height:hp('20%'),
+        width:wp('100%')
     },
     modalButton: {
         backgroundColor: "transparent",
