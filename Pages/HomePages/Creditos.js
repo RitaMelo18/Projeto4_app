@@ -45,7 +45,7 @@ function CreditosScreen() {
           <Text
             style={{
               fontSize: 14,
-            }}>{`Ana Rita Melo\nJoão Lopes\nHélder Gonçalves\n\n`}</Text>
+            }}>{`Ana Rita Melo\nJoão Lopes\nHélder Gonçalves\nAlunos do Curso de Engenharia Informática\n\n`}</Text>
           <Text
             style={{
               fontWeight: 'bold',

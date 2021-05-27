@@ -91,11 +91,13 @@ const styles = StyleSheet.create({
       width: 5,
       height: 5,
     },
+   
   },
   cardImage: {
     width: wp('95%'),
     height: hp('15%'),
     resizeMode: 'cover',
+   
   },
 });
 

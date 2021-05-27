@@ -141,6 +141,7 @@ function MapScreen() {
             'Avaliação registada!',
             ToastAndroid.SHORT,
             ToastAndroid.CENTER,
+            setRatingCount(0)
           ),
         );
     }
