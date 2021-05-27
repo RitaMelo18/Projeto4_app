@@ -1,13 +1,16 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import {Text, View} from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { createAppContainer } from 'react-navigation';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
+import {createAppContainer} from 'react-navigation';
+import {createBottomTabNavigator} from 'react-navigation-tabs';
 
-import HomeScreen from './Pages/Home'
-import MapScreen from './Pages/Map'
-import RestauranteScreen from './Pages/Food'
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen'; //Ecrã responsivo
+import HomeScreen from './Pages/Home';
+import MapScreen from './Pages/Map';
+import RestauranteScreen from './Pages/Food';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen'; //Ecrã responsivo
 
 // class HomeScreen extends React.Component {
 //   render() {
@@ -39,39 +42,40 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 //   }
 // }
 
-
 const TabNavigator = createBottomTabNavigator(
   {
     Início: HomeScreen,
     Mapa: MapScreen,
-    Recomendações: RestauranteScreen
+    Recomendações: RestauranteScreen,
   },
   {
-    defaultNavigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({  tintColor }) => {
-        const { routeName } = navigation.state;
+    defaultNavigationOptions: ({navigation}) => ({
+      tabBarIcon: ({tintColor}) => {
+        const {routeName} = navigation.state;
         let IconComponent = FontAwesome5;
         let iconName;
         if (routeName === 'Início') {
-          iconName = 'home'
+          iconName = 'home';
         } else if (routeName === 'Mapa') {
-          iconName = 'map-marker-alt'
+          iconName = 'map-marker-alt';
         } else if (routeName === 'Recomendações') {
-          iconName = 'utensils'
+          iconName = 'utensils';
         }
 
         // You can return any component that you like here!
-        return <FontAwesome5  name={iconName} size={25} color={tintColor} />;
+        return <FontAwesome5 name={iconName} size={25} color={tintColor} />;
       },
     }),
     tabBarOptions: {
-      style:{height: hp('8%'), justifyContent: 'center', alignContent:'center'},
-      activeTintColor: "#376034",
-      inactiveTintColor: 'gray'     
-      
+      style: {
+        height: hp('8%'),
+        justifyContent: 'center',
+        alignContent: 'center',
+      },
+      activeTintColor: '#376034',
+      inactiveTintColor: 'gray',
     },
-  }
+  },
 );
 
 export default createAppContainer(TabNavigator);
-
