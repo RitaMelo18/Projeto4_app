@@ -20,29 +20,36 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen'; //Ecrã responsivo
 
-function HomeScreen({ navigation }) {
-    let { container, cardText, card, cardImage} = styles
-    return (
-        <View style={container}>
-            <TouchableOpacity style={card} onPress={() => navigation.navigate("Cozido")}>
-                <Image style={cardImage} source={require('../images/cozido.jpeg')} />
-                <Text style={cardText}>Cozido à Portuguesa</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={card} onPress={() => navigation.navigate("Confraria")}>
-                <Image style={cardImage} source={require('../images/confraria.jpg')} />
-                <Text style={cardText}>Confraria</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={card} onPress={() => navigation.navigate("Domingos Rodrigues")}>
-                <Image style={cardImage} source={require('../images/domingos.jpg')} />
-                <Text style={cardText}>Domingos Rodrigues</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={card} onPress={() => navigation.navigate("Créditos")}>
-                <Image style={cardImage} source={require('../images/creditos2.png')} />
-                <Text style={cardText}>Créditos</Text>
-            </TouchableOpacity>
-
-        </View>
-    );
+function HomeScreen({navigation}) {
+  let {container, cardText, card, cardImage} = styles;
+  return (
+    <View style={container}>
+      <TouchableOpacity
+        style={card}
+        onPress={() => navigation.navigate('Cozido')}>
+        <Image style={cardImage} source={require('../images/cozido.jpeg')} />
+        <Text style={cardText}>Cozido à Portuguesa</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={card}
+        onPress={() => navigation.navigate('Confraria')}>
+        <Image style={cardImage} source={require('../images/confraria.jpg')} />
+        <Text style={cardText}>Confraria</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={card}
+        onPress={() => navigation.navigate('Domingos Rodrigues')}>
+        <Image style={cardImage} source={require('../images/domingos.jpg')} />
+        <Text style={cardText}>Domingos Rodrigues</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={card}
+        onPress={() => navigation.navigate('Créditos')}>
+        <Image style={cardImage} source={require('../images/creditos2.png')} />
+        <Text style={cardText}>Créditos</Text>
+      </TouchableOpacity>
+    </View>
+  );
 }
 
 function App() {
@@ -66,7 +73,7 @@ function App() {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
+    marginTop: 60,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',

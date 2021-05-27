@@ -1,16 +1,11 @@
 import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
-import Icon from 'react-native-ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {createAppContainer} from 'react-navigation';
-import {createBottomTabNavigator} from 'react-navigation-tabs';
 import {SearchBar} from 'react-native-elements';
 
 function FoodScreen() {
   return (
-    <View>
-      <Text></Text>
+    <View style={styles.container}>
       <Text
         style={
           styles.info
@@ -19,8 +14,7 @@ function FoodScreen() {
         <SearchBar
           round={true}
           lightTheme={true}
-          platform="android"
-          // placeholder="Search"
+          platform="ios"
           icon={() => (
             <FontAwesome5 class="far fa-search" size={30} color={'#FFF'} />
           )}
@@ -47,10 +41,8 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   container: {
+    marginTop: 60,
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5F5F5',
   },
 });
 
