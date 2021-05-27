@@ -52,7 +52,7 @@ function DomingosScreen() {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}
-                source={require('../../images/confraria2.jpg')}
+                source={require('../../images/domingos.jpg')}
               />
               <Text style={{textAlign: 'justify', lineHeight: 20}}>
                 {item.valor}
