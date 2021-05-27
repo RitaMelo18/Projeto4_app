@@ -23,7 +23,7 @@ function HomeScreen({ navigation }) {
                 <Text style={cardText}>Confraria</Text>
             </TouchableOpacity>
             <TouchableOpacity style={card} onPress={() => navigation.navigate("Domingos Rodrigues")}>
-                <Image style={cardImage} source={require('../images/confraria2.jpg')} />
+                <Image style={cardImage} source={require('../images/domingos.jpg')} />
                 <Text style={cardText}>Domingos Rodrigues</Text>
             </TouchableOpacity>
             <TouchableOpacity style={card} onPress={() => navigation.navigate("Créditos")}>

@@ -32,7 +32,8 @@ function DomingosScreen() {
                     keyExtractor={({ id }, index) => id}
                     renderItem={({ item }) => (
                         <View >
-                       <Image style={{width:wp('90%'), height:hp('35%'), resizeMode:'contain', justifyContent: 'center', alignItems: 'center'}} source={require('../../images/confraria2.jpg')} />
+                       <Image style={{width:wp('90%'), height:hp('35%'), resizeMode:'contain', justifyContent: 'center', alignItems: 'center'}} source={require('../../images/domingos1.jpg')} />
+                       <Text></Text>
                         <Text style={{textAlign: 'justify', lineHeight: 20}}>{item.valor}</Text>
                         </View>
                     )}
