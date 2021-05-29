@@ -11,10 +11,14 @@ import {
     heightPercentageToDP as hp,
 } from 'react-native-responsive-screen'; //Ecrã responsivo
 import { Platform } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { set } from 'react-native-reanimated';
 
 
 
-const FoodScreen = () => {
+function FoodScreen({ navigation }) {
+    const [item, setItem] = useState([]);
     const [search, setSearch] = useState('');
     const [filteredDataSource, setFilteredDataSource] = useState([]);
     const [masterDataSource, setMasterDataSource] = useState([]);
@@ -54,18 +58,22 @@ const FoodScreen = () => {
         }
     };
 
+
+
     const ItemView = ({ item }) => {
         return (
             // Flat List Item
             <View>
-                <Image
-                    style={styles.cardImage}
-                    source={{ uri: 'http://backoffice.confrariadocozido.pt/' + item.imagem }}
-                />
-                <Text style={styles.cardText} onPress={() => getItem(item)}>
-                    {item.nome.toUpperCase()}
-                </Text>
-                <Text></Text>
+                <TouchableOpacity onPress={() => {getItem(item)}}>
+                    <Image
+                        style={styles.cardImage}
+                        source={{ uri: 'http://backoffice.confrariadocozido.pt/' + item.imagem }}
+                    />
+                    <Text style={styles.cardText}>
+                        {item.nome.toUpperCase()}
+                    </Text>
+                    <Text></Text>
+                </TouchableOpacity>
             </View>
 
         );
@@ -84,10 +92,15 @@ const FoodScreen = () => {
         );
     };
 
+
+
     const getItem = (item) => {
-        // Function for click on an item
-        alert('Id : ' + item.id + ' Title : ' + item.nome);
+        // // Function for click on an item
+        // alert('Id : ' + item.id + ' Title : ' + item.nome);
+
     };
+
+
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }}>
@@ -121,8 +134,8 @@ const styles = StyleSheet.create({
     },
     itemStyle: {
         padding: 10,
-        alignContent:'center',
-        alignItems:'center'
+        alignContent: 'center',
+        alignItems: 'center'
     },
     info: {
         width: wp('90%'),

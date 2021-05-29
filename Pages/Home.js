@@ -14,6 +14,7 @@ import CozidoScreen from './HomePages/Cozido';
 import ConfrariaScreen from './HomePages/Confraria';
 import DomingosScreen from './HomePages/Domingos';
 import CreditosScreen from './HomePages/Creditos';
+import RestauranteRegiaoScreen from './RestauranteRegiao';
 
 import {
   widthPercentageToDP as wp,
@@ -59,6 +60,7 @@ function App() {
         <Stack.Screen name="Confraria" component={ConfrariaScreen} />
         <Stack.Screen name="Domingos Rodrigues" component={DomingosScreen} />
         <Stack.Screen name="Créditos" component={CreditosScreen} />
+        <Stack.Screen name="Restaurantes" component={RestauranteRegiaoScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
