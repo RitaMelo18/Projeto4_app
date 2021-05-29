@@ -1,19 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, FlatList, Image, TouchableOpacity, SafeAreaView } from 'react-native';
+import { Text, View, StyleSheet, FlatList, Image, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from 'react-native-responsive-screen'; //Ecrã responsivo
 import RestauranteRegiaoScreen from './RestauranteRegiao';
-import {createStackNavigator} from '@react-navigation/stack';
-import {NavigationContainer} from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
 
-function FoodScreen({navigation}) {
-    const [item, setItem] = useState([]);
+
+
+function FoodScreen({ navigation }) {
+    const [itemR, setItem] = useState([]);
     const [search, setSearch] = useState('');
     const [filteredDataSource, setFilteredDataSource] = useState([]);
     const [masterDataSource, setMasterDataSource] = useState([]);
+    const [loading2, setLoading2] = useState(true);
+    const [loading3, setLoading3] = useState(true);
+    const [email, setEmail] = useState([]);
+    const [contacto, setContacto] = useState([]);
 
     useEffect(() => {
         fetch('http://apibackoffice.confrariadocozido.pt/api/get/regioesRestaurantes')
@@ -25,7 +31,16 @@ function FoodScreen({navigation}) {
             .catch((error) => {
                 console.error(error);
             });
+
+        fetch('http://apibackoffice.confrariadocozido.pt/api/get/email')
+            .then(response => response.json())
+            .then(responseJson => {
+                setLoading2(false), setEmail(responseJson);
+            })
+            .catch(error => console.error(error));
     }, []);
+
+    console.log(email)
 
     const searchFilterFunction = (text) => {
         // Check if searched text is not blank
@@ -51,11 +66,11 @@ function FoodScreen({navigation}) {
     };
 
     const ItemView = ({ item }) => {
-        
+
         return (
             // Flat List Item
             <View>
-                <TouchableOpacity onPress={() => { setItem(item),navigation.navigate("RestauranteRegiao", item)}}>
+                <TouchableOpacity onPress={() => { setItem(item), navigation.navigate("Restaurantes Recomendados", { Id: item.id, Nome: item.nome }) }}>
                     <Image
                         style={styles.cardImage}
                         source={{ uri: 'http://backoffice.confrariadocozido.pt/' + item.imagem }}
@@ -97,8 +112,18 @@ function FoodScreen({navigation}) {
         <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }}>
             <View style={styles.container}>
                 <Text></Text>
-                <Text style={styles.info}>{`Caso queira aderir e ser recomendado contacte:\nXXXXXXXXX`}</Text>
+                <FlatList
+                style={{height:hp('19%'), width: wp('95%'), marginLeft:10}}
+                    data={email}
+                    keyExtractor={({ id }, index) => id}
+                    renderItem={({ item }) => (
+                        
+                            <Text style={styles.info}>{`Caso queira aderir e ser recomendado contacte:\n` + item.valor + ``}</Text>
+                       
+                    )}
+                />
                 <SearchBar
+                   
                     platform='android'
                     searchIcon={{ size: 24 }}
                     onChangeText={(text) => searchFilterFunction(text)}
@@ -107,6 +132,7 @@ function FoodScreen({navigation}) {
                     value={search}
                 />
                 <FlatList
+                    style={{ paddingBottom: 100 }}
                     data={filteredDataSource}
                     keyExtractor={(item, index) => index.toString()}
                     ItemSeparatorComponent={ItemSeparatorView}
@@ -120,33 +146,38 @@ function FoodScreen({navigation}) {
 function App() {
     const Stack = createStackNavigator();
     return (
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Restaurante">
-          <Stack.Screen
-            name="Restaurante"
-            component={FoodScreen}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen name="RestauranteRegiao" component={RestauranteRegiaoScreen} />          
-        </Stack.Navigator>
-      </NavigationContainer>
+        <NavigationContainer>
+            <Stack.Navigator initialRouteName="Restaurante">
+                <Stack.Screen
+                    name="Restaurante"
+                    component={FoodScreen}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="Restaurantes Recomendados"
+                    component={RestauranteRegiaoScreen}
+                />
+            </Stack.Navigator>
+        </NavigationContainer>
     );
-  }
+}
 
 const styles = StyleSheet.create({
     container: {
         backgroundColor: 'white',
         alignContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        flex: 1,
+        padding: 20
     },
-    itemStyle: {
-        padding: 10,
-        alignContent: 'center',
-        alignItems: 'center'
-    },
+    // itemStyle: {
+    //     padding: 10,
+    //     alignContent: 'center',
+    //     alignItems: 'center'
+    // },
     info: {
         width: wp('90%'),
-        height: hp('10%'),
+        height: hp('11%'),
         borderColor: '#44753d',
         borderWidth: 1,
         borderRadius: 10,
@@ -157,7 +188,9 @@ const styles = StyleSheet.create({
         right: 5,
         textAlign: 'center',
         fontSize: 14,
-        lineHeight: 20
+        lineHeight: 20,
+        alignContent: 'center',
+        alignItems: 'center',
     },
     cardImage: {
         width: wp('95%'),
