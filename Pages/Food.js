@@ -1,23 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View, StyleSheet, FlatList, Image, TouchableOpacity, SafeAreaView } from 'react-native';
-import Icon from 'react-native-ionicons';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
-import { createAppContainer } from 'react-navigation';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { SearchBar } from 'react-native-elements';
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from 'react-native-responsive-screen'; //Ecrã responsivo
-import { Platform } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { set } from 'react-native-reanimated';
+import RestauranteRegiaoScreen from './RestauranteRegiao';
+import {createStackNavigator} from '@react-navigation/stack';
+import {NavigationContainer} from '@react-navigation/native';
 
-
-
-function FoodScreen({ navigation }) {
+function FoodScreen({navigation}) {
     const [item, setItem] = useState([]);
     const [search, setSearch] = useState('');
     const [filteredDataSource, setFilteredDataSource] = useState([]);
@@ -58,13 +50,12 @@ function FoodScreen({ navigation }) {
         }
     };
 
-
-
     const ItemView = ({ item }) => {
+        
         return (
             // Flat List Item
             <View>
-                <TouchableOpacity onPress={() => {getItem(item)}}>
+                <TouchableOpacity onPress={() => { setItem(item),navigation.navigate("RestauranteRegiao", item)}}>
                     <Image
                         style={styles.cardImage}
                         source={{ uri: 'http://backoffice.confrariadocozido.pt/' + item.imagem }}
@@ -126,6 +117,22 @@ function FoodScreen({ navigation }) {
     );
 };
 
+function App() {
+    const Stack = createStackNavigator();
+    return (
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Restaurante">
+          <Stack.Screen
+            name="Restaurante"
+            component={FoodScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen name="RestauranteRegiao" component={RestauranteRegiaoScreen} />          
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
+
 const styles = StyleSheet.create({
     container: {
         backgroundColor: 'white',
@@ -166,4 +173,6 @@ const styles = StyleSheet.create({
     }
 });
 
-export default FoodScreen;
+
+
+export default App;

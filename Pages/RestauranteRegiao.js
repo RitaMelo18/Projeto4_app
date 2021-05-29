@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 
-function RestauranteRegiao() {
+function RestauranteRegiao(navigation) {
 
   return (
     <View>
-        <Text>Hiiiii</Text>
+        <Text>{navigation.getParam('nome')}</Text>
     </View>
   );
 }
