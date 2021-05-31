@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, FlatList, Image, TouchableOpacity, SafeAreaView } from 'react-native';
+import { Platform } from 'react-native';
+import { Text, View, StyleSheet, FlatList, Image, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -17,8 +18,9 @@ function RestauranteRegiao({ navigation, route }) {
   // }, [route.params?.Nome]);
   const nome = route.params?.Nome
   const idRecebido = route.params?.Id
+  const imagem = route.params?.Imagem
 
-  console.log(idRecebido)
+  console.log(imagem)
 
 
   useEffect(() => {
@@ -32,50 +34,41 @@ function RestauranteRegiao({ navigation, route }) {
 
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }}>
-      <Text style={styles.cardText}>{nome}</Text>
-      <View style={styles.container}>
-        {data
-          .filter(restaurante => restaurante.idRegiao == idRecebido)
-          .map(restaurante => (
-            <View key={restaurante.id}>
-              <Text>{restaurante.nome}</Text>
-              <Text></Text>
-              <Text> </Text>
-              <Text>Morada: {restaurante.morada}</Text>
-              <Text> </Text>
-              <Text>Contacto: {restaurante.contacto}</Text>
-              <Text> </Text>
-              <Text>
-                Dia do Cozido: {restaurante.diaCozido}
-              </Text>
-              <Text> </Text>
-              <Text>
-                Horário: {restaurante.horaInicio}h - {restaurante.horaFim}h
-                </Text>
-              <Text> </Text>
-              <Text>
-                Preço: {restaurante.precoMinimo}€ - {restaurante.precoMaximo}€
-                </Text>
-              <Text>---------------------------------</Text>
-            </View>
-          ))}
-        {/* <FlatList
-          data={filteredDataSource}
-          keyExtractor={(item, index) => index.toString()}
-          ItemSeparatorComponent={ItemSeparatorView}
-          renderItem={ItemView}
-        /> */}
-      </View>
-    </SafeAreaView>
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <Text style={styles.cardText}>{nome}</Text>
+        <Text></Text>
+        <Image
+          style={{ width: wp('97%'), height: hp('25%'), alignContent: 'center', justifyContent: 'center', alignItems: 'center', left: 6, right: 6, top: 5, bottom: 5 }}
+          source={{ uri: 'http://backoffice.confrariadocozido.pt/' + imagem }}
+        />
+        <Text style={{ borderBottomColor: '#44753d', borderBottomWidth: 1 }}></Text>
+
+        <View style={styles.container}>
+          {data
+            .filter(restaurante => restaurante.idRegiao == idRecebido)
+            .map(restaurante => (
+              <View key={restaurante.id} style={{ borderBottomColor: '#44753d', borderBottomWidth: 1 }}>
+                <Text></Text>
+                <Text style={{ fontSize: 16, fontWeight: 'bold', marginLeft: 10, lineHeight: 30 }}>{restaurante.nome}</Text>
+                <Text style={{ fontSize: 15, marginLeft: 10, lineHeight: 20 }}>Morada: {restaurante.morada}</Text>
+                <Text style={{ fontSize: 15, marginLeft: 10, lineHeight: 20 }}>Contacto: {restaurante.contacto}</Text>
+                <Text style={{ fontSize: 15, marginLeft: 10, lineHeight: 20 }}>Dia do Cozido: {restaurante.diaCozido}</Text>
+                <Text style={{ fontSize: 15, marginLeft: 10, lineHeight: 20 }}>Horário: {restaurante.horaInicio}h - {restaurante.horaFim}h</Text>
+                <Text style={{ fontSize: 15, marginLeft: 10, lineHeight: 20 }}>Preço: {restaurante.precoMinimo}€ - {restaurante.precoMaximo}€</Text>
+                <Text></Text>
+              </View>
+            ))}
+        </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
-    alignContent: 'center',
-    alignItems: 'center'
+    flex: 1,
+    paddingTop: (Platform.OS) === 'android' ? 2 : 0,
+    flexDirection: 'column',
+    backgroundColor: '#FFF'
   },
   itemStyle: {
     padding: 10,

@@ -70,7 +70,7 @@ function FoodScreen({ navigation }) {
         return (
             // Flat List Item
             <View>
-                <TouchableOpacity onPress={() => { setItem(item), navigation.navigate("Restaurantes Recomendados", { Id: item.id, Nome: item.nome }) }}>
+                <TouchableOpacity onPress={() => { setItem(item), navigation.navigate("Restaurantes Recomendados", { Id: item.id, Nome: item.nome, Imagem: item.imagem }) }}>
                     <Image
                         style={styles.cardImage}
                         source={{ uri: 'http://backoffice.confrariadocozido.pt/' + item.imagem }}
