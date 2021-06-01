@@ -40,7 +40,6 @@ function FoodScreen({ navigation }) {
             .catch(error => console.error(error));
     }, []);
 
-    console.log(email)
 
     const searchFilterFunction = (text) => {
         // Check if searched text is not blank
@@ -123,7 +122,6 @@ function FoodScreen({ navigation }) {
                     )}
                 />
                 <SearchBar
-                   
                     platform='android'
                     searchIcon={{ size: 24 }}
                     onChangeText={(text) => searchFilterFunction(text)}
@@ -132,7 +130,7 @@ function FoodScreen({ navigation }) {
                     value={search}
                 />
                 <FlatList
-                    style={{ paddingBottom: 100 }}
+                    style={{ paddingBottom: 100}}
                     data={filteredDataSource}
                     keyExtractor={(item, index) => index.toString()}
                     ItemSeparatorComponent={ItemSeparatorView}
@@ -168,29 +166,22 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         alignItems: 'center',
         flex: 1,
-        padding: 20
+        padding: 10,
+        marginTop:-20
     },
-    // itemStyle: {
-    //     padding: 10,
-    //     alignContent: 'center',
-    //     alignItems: 'center'
-    // },
     info: {
         width: wp('90%'),
-        height: hp('11%'),
+        height: hp('10%'),
         borderColor: '#44753d',
         borderWidth: 1,
         borderRadius: 10,
-        padding: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
+        padding: 10,
         left: 5,
         right: 5,
         textAlign: 'center',
-        fontSize: 14,
-        lineHeight: 20,
-        alignContent: 'center',
-        alignItems: 'center',
+        fontSize: 13,
+        lineHeight:20,
+        marginTop:8
     },
     cardImage: {
         width: wp('95%'),
@@ -199,9 +190,6 @@ const styles = StyleSheet.create({
     },
     cardText: {
         fontSize: 16,
-        alignItems: 'center',
-        justifyContent: 'center',
-        alignContent: 'center',
         textAlign: 'center',
     }
 });

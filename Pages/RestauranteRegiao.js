@@ -20,8 +20,6 @@ function RestauranteRegiao({ navigation, route }) {
   const idRecebido = route.params?.Id
   const imagem = route.params?.Imagem
 
-  console.log(imagem)
-
 
   useEffect(() => {
     fetch('http://apibackoffice.confrariadocozido.pt/api/get/restaurantesRecomendadosAll')
@@ -34,7 +32,7 @@ function RestauranteRegiao({ navigation, route }) {
 
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+    <ScrollView contentContainerStyle={{ flexGrow: 1, backgroundColor:"#FFF" }}>
         <Text style={styles.cardText}>{nome}</Text>
         <Text></Text>
         <Image
@@ -88,7 +86,7 @@ const styles = StyleSheet.create({
     right: 5,
     textAlign: 'center',
     fontSize: 14,
-    lineHeight: 20
+    lineHeight: 20,
   },
   cardImage: {
     width: wp('95%'),
