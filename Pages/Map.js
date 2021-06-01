@@ -42,8 +42,8 @@ function MapScreen() {
   // const rating = 0;
 
   const [initialPosition, setInicialPosition] = useState({
-    latitude: 41.6946,
-    longitude: -8.83016,
+    latitude: 38.72567813080763,
+    longitude:  -9.139776001610233,
     latitudeDelta: 0.1,
     longitudeDelta: 0.1,
   });
