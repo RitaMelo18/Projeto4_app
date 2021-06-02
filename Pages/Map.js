@@ -25,6 +25,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen'; //Ecrã responsivo
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 
 
 
@@ -38,6 +39,7 @@ function MapScreen() {
   const [numeroVotos, setNVotos] = useState(0);
   const [somatorioAvaliacao, setSomatorioAval] = useState(0);
   const [loading2, setLoading2] = useState(false);
+  const [localizacao, setLocalizacao] = useState(false)
 
   const PutsomatorioAval = somatorioAvaliacao + ratingCount;
   const PutNumeroVotos = numeroVotos + 1;
@@ -115,7 +117,6 @@ function MapScreen() {
   useEffect(() => {
     requestLocationPermission()
   }, []);
-
 
   const requestLocationPermission = async () => {
     try {
@@ -234,6 +235,20 @@ function MapScreen() {
     }
 
     setInicialPosition(initialRegion);
+  }
+
+  checkLocalizacao = () =>{
+    RNAndroidLocationEnabler.promptForEnableLocationIfNeeded({
+      interval: 10000,
+      fastInterval: 5000,
+    })
+      .then((data) => {
+         setLocalizacao(true)
+      })
+      .catch((err) => {
+        console.log(err.message)
+        setLocalizacao(false)
+      }); 
   }
 
   if (!loading2) {
@@ -379,7 +394,7 @@ function MapScreen() {
             alignSelf: 'flex-end' //for align to right
           }}
         >
-          <FontAwesome5 name={'street-view'} size={40} color={"#d91a20"} style={{ margin: 20 }} onPress={() => centrarUtl()} />
+          <FontAwesome5 name={'street-view'} size={35} color={"#44753d"} style={{ margin: 20 }} onPress={ () =>{localizacao === false? checkLocalizacao() : centrarUtl()} } />
         </View>
       </View>
     );
