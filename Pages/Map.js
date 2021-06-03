@@ -27,7 +27,10 @@ import {
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 
-
+let latDelta = 0.01;
+let lngDelta = 0.01;
+let lat;
+let lng;
 
 function MapScreen() {
   const [error, setError] = useState();
@@ -45,10 +48,7 @@ function MapScreen() {
   const PutNumeroVotos = numeroVotos + 1;
   const PutMediaAva = PutsomatorioAval / PutNumeroVotos;
 
-  let latDelta = 0.01;
-  let lngDelta = 0.01;
-  let lat;
-  let lng;
+
 
   // const rating = 0;
 
@@ -62,23 +62,6 @@ function MapScreen() {
     latitude: 41.6946,
     longitude: -8.83016,
   });
-  // const handleSuccess = position => {
-  //   var lat = parseFloat(position.coords.latitude);
-  //   var long = parseFloat(position.coords.longitude);
-
-  //   // var initialRegion = {
-  //   //   latitude: lat,
-  //   //   longitude: long,
-  //   //   latitudeDelta: 0.1,
-  //   //   longitudeDelta: 0.1,
-  //   // };
-  //   // setInicialPosition(initialRegion);
-  //   // setMarkerPosition(initialRegion);
-  // };
-
-  // const handleError = error => {
-  //   setError(error.message);
-  // };
 
   useEffect(() => {
     fetch('http://apibackoffice.confrariadocozido.pt/api/get/restaurantes')
@@ -88,15 +71,6 @@ function MapScreen() {
       })
       .catch(error => console.error(error));
   }, []);
-
-  // useEffect(() => {
-  //   Geolocation.getCurrentPosition(handleSuccess, handleError);
-  // }, []);
-
-  // useEffect(() => {
-  //   const watchId = Geolocation.watchPosition(handleSuccess, handleError);
-  //   return () => Geolocation.clearWatch(watchId);
-  // }, []);
 
   useEffect(() => {
     {
@@ -112,17 +86,14 @@ function MapScreen() {
 
   useEffect(() => {
     requestLocationPermission()
-  }, []);
-
-  useEffect(() => {
-    requestLocationPermission()
+    checkLocalizacao()
   }, []);
 
   const requestLocationPermission = async () => {
     try {
       const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,)
 
-     
+
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         setLoading2(true)
       } else if (granted === PermissionsAndroid.RESULTS.GRANTED) {
@@ -153,18 +124,10 @@ function MapScreen() {
         );
       }
     } catch (err) {
-      
+
     }
 
   }
-
-
-
-
-  // console.log(ratingCount)
-  // console.log(avaliaçaoTotal)
-  // console.log(nVotos)
-  // console.log(somatorioAvaliacao)
 
   function postAvaliacao() {
     if (ratingCount == 0) {
@@ -211,17 +174,17 @@ function MapScreen() {
   userLocationChanged = event => {
     const newRegion = event.nativeEvent.coordinate;
 
-    if (!(newRegion.latitude == lat && newRegion.longitude == lng)) {
+    
       lat = newRegion.latitude
       lng = newRegion.longitude
-    }
+    
 
   }
 
   changeRegion = event => {
 
-    latDelta = ((event.latitudeDelta) * 0.77426815);
-    lngDelta = ((event.longitudeDelta) * 0.77426815);
+    latDelta = ((event.latitudeDelta) * 0.33426815);
+    lngDelta = ((event.longitudeDelta) * 0.33426815);
 
     //console.log("LATD1: " + latDelta + " LNGD1: " + lngDelta)
   }
@@ -231,25 +194,33 @@ function MapScreen() {
       latitude: lat,
       longitude: lng,
       longitudeDelta: latDelta, //0,7742681499201246
-      latitudeDelta: lngDelta
+      latitudeDelta: lngDelta,
     }
-
     setInicialPosition(initialRegion);
   }
 
-  checkLocalizacao = () =>{
+  checkLocalizacao = () => {
     RNAndroidLocationEnabler.promptForEnableLocationIfNeeded({
       interval: 10000,
       fastInterval: 5000,
     })
       .then((data) => {
-         setLocalizacao(true)
+        setLocalizacao(true)
+        setLoading2(false)
+        carregarPagina()
       })
       .catch((err) => {
         console.log(err.message)
         setLocalizacao(false)
-      }); 
+      });
   }
+
+  carregarPagina = () => {
+    setTimeout(() => {
+      setLoading2(true);
+    }, 3000);
+  }
+
 
   if (!loading2) {
     return (
@@ -356,12 +327,6 @@ function MapScreen() {
           showsUserLocation={true}
           onUserLocationChange={(event) => this.userLocationChanged(event)}
           onRegionChangeComplete={(event) => this.changeRegion(event)}>
-          <Marker
-            coordinate={markerPosition}
-            // icon={require('../images/user2.png')}
-            // pinColor={'#03A9F4'}
-            opacity={0}></Marker>
-
           {data
             .filter(marker => marker.estado == 1)
             .map(marker => (
@@ -394,7 +359,7 @@ function MapScreen() {
             alignSelf: 'flex-end' //for align to right
           }}
         >
-          <FontAwesome5 name={'street-view'} size={35} color={"#44753d"} style={{ margin: 20 }} onPress={ () =>{localizacao === false? checkLocalizacao() : centrarUtl()} } />
+          <FontAwesome5 name={'street-view'} size={35} color={"#44753d"} style={{ margin: 20 }} onPress={() => { localizacao === false ? checkLocalizacao() : centrarUtl() }} />
         </View>
       </View>
     );
