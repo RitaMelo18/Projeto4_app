@@ -516,6 +516,10 @@ SPEC CHECKSUMS:
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
   Yoga: 8c8436d4171c87504c648ae23b1d81242bdf3bbf
 
+<<<<<<< Updated upstream
 PODFILE CHECKSUM: d35ead7ef3c62f5692b4e42f347ef1f005cbe100
+=======
+PODFILE CHECKSUM: ecef3f91a39daa09f9476dc3f1715badc592e8c8
+>>>>>>> Stashed changes
 
 COCOAPODS: 1.10.1
