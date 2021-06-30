@@ -54,6 +54,7 @@ function DomingosScreen() {
                 }}
                 source={require('../../images/domingos.jpg')}
               />
+              <Text></Text>
               <Text style={{textAlign: 'justify', lineHeight: 20}}>
                 {item.valor}
               </Text>
