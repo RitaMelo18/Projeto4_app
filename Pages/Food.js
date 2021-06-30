@@ -17,6 +17,7 @@ import {
 import RestauranteRegiaoScreen from './RestauranteRegiao';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
+import {ActivityIndicator} from 'react-native-paper';
 
 function FoodScreen({navigation}) {
   const [itemR, setItem] = useState([]);
@@ -24,9 +25,7 @@ function FoodScreen({navigation}) {
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
   const [loading2, setLoading2] = useState(true);
-  const [loading3, setLoading3] = useState(true);
   const [email, setEmail] = useState([]);
-  const [contacto, setContacto] = useState([]);
 
   useEffect(() => {
     fetch(
@@ -117,21 +116,11 @@ function FoodScreen({navigation}) {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#FFF'}}>
       <View style={styles.container}>
-        <Text></Text>
-        <FlatList
-          style={{height: hp('19%'), width: wp('95%'), marginLeft: 10}}
-          data={email}
-          keyExtractor={({id}, index) => id}
-          renderItem={({item}) => (
-            <Text style={styles.info}>
-              {`Caso queira aderir e ser recomendado contacte:\n` +
-                item.valor +
-                ``}
-            </Text>
-          )}
-        />
+        <Text style={styles.info}>
+          Caso queira aderir e ser recomendado contacte: {email[0].valor}
+        </Text>
         <SearchBar
-          platform="android"
+          platform="ios"
           searchIcon={{size: 24}}
           onChangeText={text => searchFilterFunction(text)}
           onClear={text => searchFilterFunction('')}
@@ -139,7 +128,6 @@ function FoodScreen({navigation}) {
           value={search}
         />
         <FlatList
-          style={{paddingBottom: 100}}
           data={filteredDataSource}
           keyExtractor={(item, index) => index.toString()}
           ItemSeparatorComponent={ItemSeparatorView}
@@ -180,7 +168,6 @@ const styles = StyleSheet.create({
   },
   info: {
     width: wp('90%'),
-    height: hp('10%'),
     borderColor: '#44753d',
     borderWidth: 1,
     borderRadius: 10,
@@ -193,12 +180,15 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   cardImage: {
-    width: wp('95%'),
+    width: wp('90%'),
+    borderRadius: 13,
     height: hp('20%'),
     resizeMode: 'cover',
   },
   cardText: {
     fontSize: 16,
+    marginTop: 10,
+    fontWeight: '500',
     textAlign: 'center',
   },
 });

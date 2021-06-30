@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Component } from 'react';
+import React, {useEffect, useState, Component} from 'react';
 import {
   Text,
   View,
@@ -15,17 +15,16 @@ import {
   ActivityIndicator,
   ToastAndroid,
 } from 'react-native';
-import { createAppContainer } from 'react-navigation';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
-import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
-import { Rating, AirbnbRating } from 'react-native-ratings';
+import {createAppContainer} from 'react-navigation';
+import {createBottomTabNavigator} from 'react-navigation-tabs';
+import MapView, {PROVIDER_GOOGLE, Marker, Callout} from 'react-native-maps';
+import {Rating, AirbnbRating} from 'react-native-ratings';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen'; //Ecrã responsivo
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 
 let latDelta = 0.01;
 let lngDelta = 0.01;
@@ -42,13 +41,11 @@ function MapScreen() {
   const [numeroVotos, setNVotos] = useState(0);
   const [somatorioAvaliacao, setSomatorioAval] = useState(0);
   const [loading2, setLoading2] = useState(false);
-  const [localizacao, setLocalizacao] = useState(false)
+  const [localizacao, setLocalizacao] = useState(false);
 
   const PutsomatorioAval = somatorioAvaliacao + ratingCount;
   const PutNumeroVotos = numeroVotos + 1;
   const PutMediaAva = PutsomatorioAval / PutNumeroVotos;
-
-
 
   // const rating = 0;
 
@@ -85,49 +82,29 @@ function MapScreen() {
   });
 
   useEffect(() => {
-    requestLocationPermission()
-    checkLocalizacao()
+    findCoordinates();
   }, []);
 
-  const requestLocationPermission = async () => {
-    try {
-      const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,)
-
-
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        setLoading2(true)
-      } else if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        Alert.alert(
-          "Aviso",
-          "É necessário esta permissão para utilizar a Aplicação",
-          [
-            {
-              text: "Dar premissão",
-              onPress: () => requestLocationPermission()
-            },
-            {
-              text: "Cancel",
-              style: "cancel"
-            },
-
-          ]
-        );
-      } else if (granted === "never_ask_again") {
-        Alert.alert(
-          "Aviso",
-          "O acesso à localização foi negado, se pretende usar a aplicação altere a premissão de localização manualmente.",
-          [
-            {
-              text: "Entendi",
-            },
-          ]
-        );
-      }
-    } catch (err) {
-
-    }
-
-  }
+  const findCoordinates = () => {
+    Geolocation.getCurrentPosition(
+      position => {
+        const lat = JSON.stringify(position.coords.latitude);
+        const lng = JSON.stringify(position.coords.longitude);
+        if (lat !== undefined) {
+          setInicialPosition({
+            latitude: Number(lat),
+            longitude: Number(lng),
+            latitudeDelta: 0.02,
+            longitudeDelta: 0.02,
+          });
+          setLocalizacao(true);
+          setLoading2(true);
+        }
+      },
+      error => findCoordinates(),
+      {enableHighAccuracy: true, timeout: 1000, maximumAge: 1000},
+    );
+  };
 
   function postAvaliacao() {
     if (ratingCount == 0) {
@@ -139,7 +116,7 @@ function MapScreen() {
     } else {
       const requestOptions = {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
           id: dados,
           avaliacaoTotal: PutMediaAva,
@@ -165,7 +142,7 @@ function MapScreen() {
             'Avaliação registada!',
             ToastAndroid.SHORT,
             ToastAndroid.CENTER,
-            setRatingCount(0)
+            setRatingCount(0),
           ),
         );
     }
@@ -174,20 +151,16 @@ function MapScreen() {
   userLocationChanged = event => {
     const newRegion = event.nativeEvent.coordinate;
 
-    
-      lat = newRegion.latitude
-      lng = newRegion.longitude
-    
-
-  }
+    lat = newRegion.latitude;
+    lng = newRegion.longitude;
+  };
 
   changeRegion = event => {
-
-    latDelta = ((event.latitudeDelta) * 0.33426815);
-    lngDelta = ((event.longitudeDelta) * 0.33426815);
+    latDelta = event.latitudeDelta * 0.33426815;
+    lngDelta = event.longitudeDelta * 0.33426815;
 
     //console.log("LATD1: " + latDelta + " LNGD1: " + lngDelta)
-  }
+  };
 
   centrarUtl = () => {
     var initialRegion = {
@@ -195,48 +168,28 @@ function MapScreen() {
       longitude: lng,
       longitudeDelta: latDelta, //0,7742681499201246
       latitudeDelta: lngDelta,
-    }
+    };
     setInicialPosition(initialRegion);
-  }
+  };
 
-  checkLocalizacao = () => {
-    RNAndroidLocationEnabler.promptForEnableLocationIfNeeded({
-      interval: 10000,
-      fastInterval: 5000,
-    })
-      .then((data) => {
-        setLocalizacao(true)
-        setLoading2(false)
-        carregarPagina()
-      })
-      .catch((err) => {
-        console.log(err.message)
-        setLocalizacao(false)
-      });
-  }
-
-  carregarPagina = () => {
+  const carregarPagina = () => {
     setTimeout(() => {
       setLoading2(true);
     }, 3000);
-  }
-
+  };
 
   if (!loading2) {
     return (
       <View style={styles.containerLoading}>
-        <ActivityIndicator
-          size="large"
-          color="#44753d" />
+        <ActivityIndicator size="large" color="#44753d" />
         <Text>Carregando</Text>
       </View>
     );
   } else {
-
     return (
       <View style={styles.container}>
         <Modal // modal para escolher trajeto ou multi objetivo
-          style={{ backgroundColor: 'transparent' }}
+          style={{backgroundColor: 'transparent'}}
           animationType="fade"
           transparent={true}
           visible={modalVisible}
@@ -259,7 +212,7 @@ function MapScreen() {
                     count={5}
                     imageSize={30}
                     showRating={false}
-                    style={{ paddingHorizontal: 10 }}
+                    style={{paddingHorizontal: 10}}
                   />
                   <Text> </Text>
                   <Text style={styles.text}>Morada: {marker.morada}</Text>
@@ -272,11 +225,11 @@ function MapScreen() {
                   <Text> </Text>
                   <Text style={styles.text}>
                     Horário: {marker.horaInicio}h - {marker.horaFim}h
-                </Text>
+                  </Text>
                   <Text> </Text>
                   <Text style={styles.text}>
                     Preço: {marker.precoMinimo}€ - {marker.precoMaximo}€
-                </Text>
+                  </Text>
                   <Text> </Text>
                   <Text
                     style={{
@@ -285,7 +238,7 @@ function MapScreen() {
                       alignSelf: 'center',
                     }}>
                     A sua avaliação
-                </Text>
+                  </Text>
                   <AirbnbRating
                     defaultRating={0}
                     count={5}
@@ -293,26 +246,26 @@ function MapScreen() {
                     reviewSize={24}
                     reviews={[1, 2, 3, 4, 5]}
                     onFinishRating={rating => setRatingCount(rating)}
-                  // // selectedColor="#44753d"
-                  // // reviewColor="#44753d"
-                  // starImage={require('../images/colher.png')}
+                    // // selectedColor="#44753d"
+                    // // reviewColor="#44753d"
+                    // starImage={require('../images/colher.png')}
 
-                  // onPress={() => setDefaultRating(onFinishRating)}
+                    // onPress={() => setDefaultRating(onFinishRating)}
                   />
 
-                  <View style={{ flexDirection: 'row' }}>
+                  <View style={{flexDirection: 'row'}}>
                     <TouchableOpacity
                       style={[styles.modalButton, styles.center]}
                       onPress={() => {
                         postAvaliacao();
                         setModalVisible(!modalVisible);
                       }}>
-                      <Text style={{ color: '#1a73e8' }}>Avaliar</Text>
+                      <Text style={{color: '#1a73e8'}}>Avaliar</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                       style={[styles.modalButton, styles.center]}
                       onPress={() => setModalVisible(!modalVisible)}>
-                      <Text style={{ color: '#1a73e8' }}>Fechar</Text>
+                      <Text style={{color: '#1a73e8'}}>Fechar</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -325,8 +278,8 @@ function MapScreen() {
           style={styles.map}
           region={initialPosition}
           showsUserLocation={true}
-          onUserLocationChange={(event) => this.userLocationChanged(event)}
-          onRegionChangeComplete={(event) => this.changeRegion(event)}>
+          onUserLocationChange={event => this.userLocationChanged(event)}
+          onRegionChangeComplete={event => this.changeRegion(event)}>
           {data
             .filter(marker => marker.estado == 1)
             .map(marker => (
@@ -355,11 +308,18 @@ function MapScreen() {
         </MapView>
         <View
           style={{
-            position: 'absolute',//use absolute position to show button on top of the map
-            alignSelf: 'flex-end' //for align to right
-          }}
-        >
-          <FontAwesome5 name={'street-view'} size={35} color={"#44753d"} style={{ margin: 20 }} onPress={() => { localizacao === false ? checkLocalizacao() : centrarUtl() }} />
+            position: 'absolute', //use absolute position to show button on top of the map
+            alignSelf: 'flex-end', //for align to right
+          }}>
+          <FontAwesome5
+            name={'street-view'}
+            size={35}
+            color={'#44753d'}
+            style={{margin: 20, marginTop: 50}}
+            onPress={() => {
+              localizacao === false ? findCoordinates() : centrarUtl();
+            }}
+          />
         </View>
       </View>
     );
@@ -462,9 +422,9 @@ const styles = StyleSheet.create({
   },
   containerLoading: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  }
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 export default MapScreen;

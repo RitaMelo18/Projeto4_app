@@ -1,12 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { Platform } from 'react-native';
-import { Text, View, StyleSheet, FlatList, Image, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Platform} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  FlatList,
+  Image,
+  TouchableOpacity,
+  SafeAreaView,
+  ScrollView,
+} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen'; //Ecrã responsivo
 
-function RestauranteRegiao({ navigation, route }) {
+function RestauranteRegiao({navigation, route}) {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
 
@@ -16,13 +25,14 @@ function RestauranteRegiao({ navigation, route }) {
   //     // For example, send the post to the server
   //   }
   // }, [route.params?.Nome]);
-  const nome = route.params?.Nome
-  const idRecebido = route.params?.Id
-  const imagem = route.params?.Imagem
-
+  const nome = route.params?.Nome;
+  const idRecebido = route.params?.Id;
+  const imagem = route.params?.Imagem;
 
   useEffect(() => {
-    fetch('http://apibackoffice.confrariadocozido.pt/api/get/restaurantesRecomendadosAll')
+    fetch(
+      'http://apibackoffice.confrariadocozido.pt/api/get/restaurantesRecomendadosAll',
+    )
       .then(response => response.json())
       .then(responseJson => {
         setLoading(false), setData(responseJson);
@@ -30,33 +40,62 @@ function RestauranteRegiao({ navigation, route }) {
       .catch(error => console.error(error));
   }, []);
 
-
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1, backgroundColor:"#FFF" }}>
-        <Text style={styles.cardText}>{nome}</Text>
-        <Text></Text>
-        <Image
-          style={{ width: wp('97%'), height: hp('25%'), alignContent: 'center', justifyContent: 'center', alignItems: 'center', left: 6, right: 6, top: 5, bottom: 5 }}
-          source={{ uri: 'http://backoffice.confrariadocozido.pt/' + imagem }}
-        />
-        <Text style={{ borderBottomColor: '#44753d', borderBottomWidth: 1 }}></Text>
+    <ScrollView contentContainerStyle={{flexGrow: 1, backgroundColor: '#FFF'}}>
+      <Text style={styles.cardText}>{nome}</Text>
+      <Text></Text>
+      <Image
+        style={{
+          width: wp('97%'),
+          height: hp('25%'),
+          alignContent: 'center',
+          justifyContent: 'center',
+          alignItems: 'center',
+          left: 6,
+          right: 6,
+          top: 5,
+          bottom: 5,
+        }}
+        source={{uri: 'http://backoffice.confrariadocozido.pt/' + imagem}}
+      />
+      <Text style={{borderBottomColor: '#44753d', borderBottomWidth: 1}}></Text>
 
-        <View style={styles.container}>
-          {data
-            .filter(restaurante => restaurante.idRegiao == idRecebido)
-            .map(restaurante => (
-              <View key={restaurante.id} style={{ borderBottomColor: '#44753d', borderBottomWidth: 1 }}>
-                <Text></Text>
-                <Text style={{ fontSize: 16, fontWeight: 'bold', marginLeft: 10, lineHeight: 30 }}>{restaurante.nome}</Text>
-                <Text style={{ fontSize: 15, marginLeft: 10, lineHeight: 20 }}>Morada: {restaurante.morada}</Text>
-                <Text style={{ fontSize: 15, marginLeft: 10, lineHeight: 20 }}>Contacto: {restaurante.contacto}</Text>
-                <Text style={{ fontSize: 15, marginLeft: 10, lineHeight: 20 }}>Dia do Cozido: {restaurante.diaCozido}</Text>
-                <Text style={{ fontSize: 15, marginLeft: 10, lineHeight: 20 }}>Horário: {restaurante.horaInicio}h - {restaurante.horaFim}h</Text>
-                <Text style={{ fontSize: 15, marginLeft: 10, lineHeight: 20 }}>Preço: {restaurante.precoMinimo}€ - {restaurante.precoMaximo}€</Text>
-                <Text></Text>
-              </View>
-            ))}
-        </View>
+      <View style={styles.container}>
+        {data
+          .filter(restaurante => restaurante.idRegiao == idRecebido)
+          .map(restaurante => (
+            <View
+              key={restaurante.id}
+              style={{borderBottomColor: '#44753d', borderBottomWidth: 1}}>
+              <Text></Text>
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: 'bold',
+                  marginLeft: 10,
+                  lineHeight: 30,
+                }}>
+                {restaurante.nome}
+              </Text>
+              <Text style={{fontSize: 15, marginLeft: 10, lineHeight: 20}}>
+                Morada: {restaurante.morada}
+              </Text>
+              <Text style={{fontSize: 15, marginLeft: 10, lineHeight: 20}}>
+                Contacto: {restaurante.contacto}
+              </Text>
+              <Text style={{fontSize: 15, marginLeft: 10, lineHeight: 20}}>
+                Dia do Cozido: {restaurante.diaCozido}
+              </Text>
+              <Text style={{fontSize: 15, marginLeft: 10, lineHeight: 20}}>
+                Horário: {restaurante.horaInicio}h - {restaurante.horaFim}h
+              </Text>
+              <Text style={{fontSize: 15, marginLeft: 10, lineHeight: 20}}>
+                Preço: {restaurante.precoMinimo}€ - {restaurante.precoMaximo}€
+              </Text>
+              <Text></Text>
+            </View>
+          ))}
+      </View>
     </ScrollView>
   );
 }
@@ -64,14 +103,14 @@ function RestauranteRegiao({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: (Platform.OS) === 'android' ? 2 : 0,
+    paddingTop: Platform.OS === 'android' ? 2 : 0,
     flexDirection: 'column',
-    backgroundColor: '#FFF'
+    backgroundColor: '#FFF',
   },
   itemStyle: {
     padding: 10,
     alignContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   info: {
     width: wp('90%'),
@@ -100,9 +139,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
     textAlign: 'center',
-    marginTop: 10
-  }
+    marginTop: 10,
+  },
 });
-
 
 export default RestauranteRegiao;

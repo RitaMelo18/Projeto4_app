@@ -66,12 +66,10 @@ function App() {
         <Stack.Screen name="Confraria" component={ConfrariaScreen} />
         <Stack.Screen name="Domingos Rodrigues" component={DomingosScreen} />
         <Stack.Screen name="Créditos" component={CreditosScreen} />
-        
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -100,13 +98,11 @@ const styles = StyleSheet.create({
       width: 5,
       height: 5,
     },
-   
   },
   cardImage: {
     width: wp('95%'),
     height: hp('15%'),
     resizeMode: 'cover',
-   
   },
 });
 
