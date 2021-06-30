@@ -1,4 +1,4 @@
-package com.app;
+package com.apportuguesa;
 
 import com.facebook.react.ReactActivity;
 

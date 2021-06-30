@@ -112,13 +112,13 @@ function FoodScreen({ navigation }) {
             <View style={styles.container}>
                 <Text></Text>
                 <FlatList
-                style={{height:hp('19%'), width: wp('95%'), marginLeft:10}}
+                style={{height:hp('25%'), width: wp('95%'), marginLeft:10}}
                     data={email}
                     keyExtractor={({ id }, index) => id}
                     renderItem={({ item }) => (
-                        
+                            <ScrollView>
                             <Text style={styles.info}>{`Caso queira aderir e ser recomendado contacte:\n` + item.valor + ``}</Text>
-                       
+                            </ScrollView>
                     )}
                 />
                 <SearchBar
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     },
     info: {
         width: wp('90%'),
-        height: hp('10%'),
+        height: hp('19%'),
         borderColor: '#44753d',
         borderWidth: 1,
         borderRadius: 10,
@@ -179,7 +179,9 @@ const styles = StyleSheet.create({
         left: 5,
         right: 5,
         textAlign: 'center',
-        fontSize: 13,
+        alignContent: 'center',
+        justifyContent: 'center',
+        fontSize: 16,
         lineHeight:20,
         marginTop:8
     },

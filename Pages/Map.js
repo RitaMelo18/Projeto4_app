@@ -53,10 +53,10 @@ function MapScreen() {
   // const rating = 0;
 
   const [initialPosition, setInicialPosition] = useState({
-    latitude: 38.72567813080763,
-    longitude: -9.139776001610233,
-    latitudeDelta: 0.1,
-    longitudeDelta: 0.1,
+    latitude: 39.44048557623791,
+    longitude:  -8.123812252596974,
+    latitudeDelta: 4.5,
+    longitudeDelta: 4.5,
   });
   const [markerPosition, setMarkerPosition] = useState({
     latitude: 41.6946,

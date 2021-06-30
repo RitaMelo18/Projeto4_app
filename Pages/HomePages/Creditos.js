@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import { ScrollView } from 'react-native';
 import {Text, View, Image} from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -18,6 +19,7 @@ function CreditosScreen() {
   }
 
   return (
+    <ScrollView>
     <View style={{flex: 1, padding: 24}}>
       <View>
         <Image
@@ -55,6 +57,7 @@ function CreditosScreen() {
         </Text>
       </View>
     </View>
+    </ScrollView>
   );
 }
 
