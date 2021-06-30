@@ -380,7 +380,7 @@ const styles = StyleSheet.create({
   },
   wrap2: {
     justifyContent: 'center',
-    height: 60,
+    height: 70,
     width: 180,
     alignContent: 'center',
     borderRadius: 8,

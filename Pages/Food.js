@@ -43,7 +43,8 @@ function FoodScreen({navigation}) {
     fetch('http://apibackoffice.confrariadocozido.pt/api/get/email')
       .then(response => response.json())
       .then(responseJson => {
-        setLoading2(false), setEmail(responseJson);
+        setEmail(responseJson);
+        setLoading2(false);
       })
       .catch(error => console.error(error));
   }, []);
@@ -116,9 +117,16 @@ function FoodScreen({navigation}) {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#FFF'}}>
       <View style={styles.container}>
-        <Text style={styles.info}>
-          Caso queira aderir e ser recomendado contacte: {email[0].valor}
-        </Text>
+        {loading2 ? (
+          <View style={styles.info}>
+            <ActivityIndicator size="large" color="#44753d" />
+            <Text>Carregando</Text>
+          </View>
+        ) : (
+          <Text style={styles.info}>
+            Caso queira aderir e ser recomendado contacte: {email[0].valor}
+          </Text>
+        )}
         <SearchBar
           platform="ios"
           searchIcon={{size: 24}}
@@ -177,7 +185,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 13,
     lineHeight: 20,
-    marginTop: 8,
+    marginTop: 15,
   },
   cardImage: {
     width: wp('90%'),
