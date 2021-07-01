@@ -112,25 +112,26 @@ function FoodScreen({ navigation }) {
             <View style={styles.container}>
                 <Text></Text>
                 <FlatList
-                style={{height:hp('25%'), width: wp('95%'), marginLeft:10}}
+                    style={{ height: hp('25%'), width: wp('95%'), marginLeft: 10 }}
                     data={email}
                     keyExtractor={({ id }, index) => id}
                     renderItem={({ item }) => (
-                            <ScrollView>
+                        <ScrollView>
                             <Text style={styles.info}>{`Caso queira aderir e ser recomendado contacte:\n` + item.valor + ``}</Text>
-                            </ScrollView>
+                        </ScrollView>
                     )}
                 />
                 <SearchBar
-                    platform='android'
+                    platform="android"
                     searchIcon={{ size: 24 }}
-                    onChangeText={(text) => searchFilterFunction(text)}
-                    onClear={(text) => searchFilterFunction('')}
+                    onChangeText={text => searchFilterFunction(text)}
+                    onClear={text => searchFilterFunction('')}
                     placeholder="Procure uma Região..."
                     value={search}
                 />
+                <Text></Text>
                 <FlatList
-                    style={{ paddingBottom: 100}}
+                    style={{ paddingBottom: 100 }}
                     data={filteredDataSource}
                     keyExtractor={(item, index) => index.toString()}
                     ItemSeparatorComponent={ItemSeparatorView}
@@ -167,11 +168,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flex: 1,
         padding: 10,
-        marginTop:-20
+        marginTop: -20,
     },
     info: {
         width: wp('90%'),
-        height: hp('19%'),
         borderColor: '#44753d',
         borderWidth: 1,
         borderRadius: 10,
@@ -179,21 +179,22 @@ const styles = StyleSheet.create({
         left: 5,
         right: 5,
         textAlign: 'center',
-        alignContent: 'center',
-        justifyContent: 'center',
-        fontSize: 16,
-        lineHeight:20,
-        marginTop:8
+        fontSize: 13,
+        lineHeight: 20,
+        marginTop: 15,
     },
     cardImage: {
-        width: wp('95%'),
+        width: wp('90%'),
+        borderRadius: 13,
         height: hp('20%'),
         resizeMode: 'cover',
     },
     cardText: {
         fontSize: 16,
+        marginTop: 10,
+        fontWeight: '500',
         textAlign: 'center',
-    }
+    },
 });
 
 
