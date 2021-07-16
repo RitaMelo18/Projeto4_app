@@ -128,23 +128,8 @@ function MapScreen() {
         'http://apibackoffice.confrariadocozido.pt/api/updateAvaliacao',
         requestOptions,
       )
-        .then(
-          setModalVisible(!modalVisible),
-          ToastAndroid.showWithGravity(
-            'Erro',
-            ToastAndroid.SHORT,
-            ToastAndroid.CENTER,
-          ),
-        )
-
-        .catch(
-          ToastAndroid.showWithGravity(
-            'Avaliação registada!',
-            ToastAndroid.SHORT,
-            ToastAndroid.CENTER,
-            setRatingCount(0),
-          ),
-        );
+        .then(setModalVisible(!modalVisible))
+        .catch(Alert.alert('Avaliação registada!'), setRatingCount(0));
     }
   }
 
